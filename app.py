@@ -4,7 +4,8 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-model = joblib.load("model.pkl")
+model = joblib.load("model_stress.pkl")
+
 scaler = joblib.load("scaler.pkl")
 
 @app.route("/", methods=["GET", "POST"])
