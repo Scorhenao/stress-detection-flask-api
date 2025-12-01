@@ -4,9 +4,9 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-model = joblib.load("model_stress1.pkl")
+model = joblib.load("model_stress(1).pkl")
 
-scaler = joblib.load("scaler1.pkl")
+scaler = joblib.load("scaler(2).pkl") 
 
 
 @app.route("/", methods=["GET"])
