@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import joblib
 import numpy as np
 import json
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
@@ -12,9 +13,9 @@ scaler = joblib.load("scaler.pkl")
 # Cargar columnas usadas
 columns = json.load(open("columns.json", "r"))
 
-@app.route("/", methods=["GET"])
+@app.route("/")
 def home():
-    return jsonify({"status": "OK", "message": "API Stress Detection Activa 🎧"})
+    return render_template("index.html")
 
 
 @app.route("/predict", methods=["POST"])
