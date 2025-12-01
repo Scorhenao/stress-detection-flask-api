@@ -1,51 +1,47 @@
-from flask import Flask, request, jsonify
 import joblib
 import numpy as np
-import json
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# Cargar modelo y scaler
-model = joblib.load("model_stress.pkl")
+model = joblib.load("model.pkl")
 scaler = joblib.load("scaler.pkl")
 
-# Cargar columnas usadas
-columns = json.load(open("columns.json", "r"))
+@app.route("/", methods=["GET", "POST"])
+def index():
+    prediction = None
+    stress_label = None
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+    if request.method == "POST":
+        try:
+            features = [
+                float(request.form["ecg_mean"]),
+                float(request.form["ecg_std"]),
+                float(request.form["eda_mean"]),
+                float(request.form["eda_std"]),
+                float(request.form["resp_mean"]),
+                float(request.form["resp_std"])
+            ]
 
+            # Convertir a array 2D
+            X_input = np.array(features).reshape(1, -1)
 
-@app.route("/predict", methods=["POST"])
-def predict():
-    try:
-        data = request.json
-        
-        # Convertir a arreglo
-        input_arr = np.array([data[col] for col in columns]).reshape(1, -1)
+            # ESCALAR ANTES DE PREDECIR
+            X_scaled = scaler.transform(X_input)
 
-        # Escalar
-        input_scaled = scaler.transform(input_arr)
+            # Predicción
+            pred = model.predict(X_scaled)[0]
+            prediction = int(pred)
 
-        # Predecir
-        pred = model.predict(input_scaled)[0]
+            labels = {0: "Relajado", 1: "Estrés leve", 2: "Estrés alto"}
+            stress_label = labels[pred]
 
-        labels = {
-            0: "Relajado",
-            1: "Estrés leve",
-            2: "Estrés alto"
-        }
+        except:
+            prediction = "Error"
+            stress_label = "Entrada inválida"
 
-        return jsonify({
-            "prediccion_num": int(pred),
-            "estado_estres": labels[int(pred)]
-        })
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 400
+    return render_template("index.html", prediction=prediction, stress_label=stress_label)
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)

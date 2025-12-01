@@ -1,122 +1,142 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Detector de Estrés – IA</title>
 
     <!-- BOOTSTRAP -->
-    <link 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
     <style>
-        body {
-            background: #f2f4f7;
-        }
-        .card {
-            border-radius: 15px;
-        }
-        .btn-primary {
-            background-color: #0d6efd;
-            border-radius: 10px;
-        }
-        .resultado-box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
-        }
-        .title {
-            font-weight: bold;
-            color: #0d6efd;
-        }
+      body {
+        background: #f2f4f7;
+      }
+      .card {
+        border-radius: 15px;
+      }
+      .btn-primary {
+        background-color: #0d6efd;
+        border-radius: 10px;
+      }
+      .resultado-box {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+      }
+      .title {
+        font-weight: bold;
+        color: #0d6efd;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
 
-<div class="container py-5">
+    <div class="container py-5">
 
-    <!-- TÍTULO -->
-    <div class="text-center mb-4">
+      <!-- TÍTULO -->
+      <div class="text-center mb-4">
         <h1 class="title">🔬 Detector de Estrés Basado en IA</h1>
-        <p class="lead">Ingrese las señales fisiológicas para estimar el nivel de estrés</p>
-    </div>
+        <p class="lead">
+          Ingrese las señales fisiológicas para estimar el nivel de estrés
+        </p>
+      </div>
 
-    <!-- TARJETA DEL FORMULARIO -->
-    <div class="card shadow p-4 mx-auto" style="max-width: 700px;">
-
+      <!-- TARJETA DEL FORMULARIO -->
+      <div class="card shadow p-4 mx-auto" style="max-width: 700px">
         <form id="formulario">
+          <div class="row g-3">
 
-            <div class="row g-3">
-
-                <div class="col-md-6">
-                    <label class="form-label">ECG Mean</label>
-                    <input type="number" class="form-control" step="any" name="ecg_mean" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">ECG Std</label>
-                    <input type="number" class="form-control" step="any" name="ecg_std" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">EDA Mean</label>
-                    <input type="number" class="form-control" step="any" name="eda_mean" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">EDA Std</label>
-                    <input type="number" class="form-control" step="any" name="eda_std" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Resp Mean</label>
-                    <input type="number" class="form-control" step="any" name="resp_mean" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label class="form-label">Resp Std</label>
-                    <input type="number" class="form-control" step="any" name="resp_std" required>
-                </div>
-
+            <div class="col-md-6">
+              <label class="form-label">
+                ECG Mean
+                <span title="Promedio del latido cardíaco. Valores más altos suelen indicar mayor activación física o estrés.">❔</span>
+              </label>
+              <input type="number" class="form-control" step="any" name="ecg_mean" required />
             </div>
 
-            <button class="btn btn-primary w-100 mt-4" type="submit">
-                Predecir Estrés
-            </button>
+            <div class="col-md-6">
+              <label class="form-label">
+                ECG Std
+                <span title="Variación del ritmo cardíaco. La irregularidad puede aumentar durante situaciones de estrés.">❔</span>
+              </label>
+              <input type="number" class="form-control" step="any" name="ecg_std" required />
+            </div>
 
+            <div class="col-md-6">
+              <label class="form-label">
+                EDA Mean
+                <span title="Promedio de la actividad electrodérmica (sudoración). Es uno de los indicadores más fuertes de estrés.">❔</span>
+              </label>
+              <input type="number" class="form-control" step="any" name="eda_mean" required />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">
+                EDA Std
+                <span title="Cambios en la sudoración de la piel. Variaciones altas pueden indicar tensión emocional.">❔</span>
+              </label>
+              <input type="number" class="form-control" step="any" name="eda_std" required />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">
+                Resp Mean
+                <span title="Promedio del ritmo respiratorio. La respiración suele acelerarse con el estrés.">❔</span>
+              </label>
+              <input type="number" class="form-control" step="any" name="resp_mean" required />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">
+                Resp Std
+                <span title="Variabilidad del ritmo respiratorio. Una respiración irregular puede indicar ansiedad o estrés.">❔</span>
+              </label>
+              <input type="number" class="form-control" step="any" name="resp_std" required />
+            </div>
+
+          </div>
+
+          <button class="btn btn-primary w-100 mt-4" type="submit">
+            Predecir Estrés
+          </button>
         </form>
+      </div>
 
-    </div>
-
-    <!-- RESULTADOS -->
-    <div id="resultado" class="resultado-box mt-4 mx-auto" style="max-width: 700px; display: none;">
+      <!-- RESULTADOS -->
+      <div
+        id="resultado"
+        class="resultado-box mt-4 mx-auto"
+        style="max-width: 700px; display: none"
+      >
         <h4 class="mb-3">Resultado:</h4>
         <p><strong>Nivel Estimado:</strong> <span id="nivel"></span></p>
         <p><strong>Código:</strong> <span id="codigo"></span></p>
+      </div>
     </div>
 
-</div>
+    <script>
+      document.getElementById("formulario").addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-<script>
-document.getElementById("formulario").addEventListener("submit", async (e) => {
-    e.preventDefault();
+        const datos = Object.fromEntries(new FormData(e.target));
 
-    const datos = Object.fromEntries(new FormData(e.target));
+        const res = await fetch("/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos),
+        });
 
-    const res = await fetch("/predict", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(datos)
-    });
+        const data = await res.json();
 
-    const data = await res.json();
+        document.getElementById("resultado").style.display = "block";
+        document.getElementById("nivel").innerText = data.estado_estres;
+        document.getElementById("codigo").innerText = data.prediccion_num;
+      });
+    </script>
 
-    document.getElementById("resultado").style.display = "block";
-    document.getElementById("nivel").innerText = data.estado_estres;
-    document.getElementById("codigo").innerText = data.prediccion_num;
-});
-</script>
-
-</body>
+  </body>
 </html>
