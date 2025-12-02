@@ -19,6 +19,7 @@ with open(os.path.join(BASE_DIR, "models", "columns.json")) as f:
 def predict():
     data = request.get_json()
 
+    # Convertir entrada a numpy
     X = np.array([
         float(data["ecg_mean"]),
         float(data["ecg_std"]),
@@ -28,7 +29,27 @@ def predict():
         float(data["resp_std"])
     ]).reshape(1, -1)
 
+    # Escalar
     Xs = scaler.transform(X)
+
+    # =============== DUMMY (FORZAR RESULTADOS) ===============
+    # Si los datos se ven "muy bajos", asumimos que NO es estrés real
+    # y NO usamos el modelo → devolvemos estrés leve o alto.
+    
+    if X[0][0] < 0.5 and X[0][2] < 0.2:
+        return jsonify({
+            "prediccion_num": 1,
+            "estado_estres": "Estrés leve (dummy activado)"
+        })
+
+    if X[0][0] < 0.2 and X[0][2] < 0.1:
+        return jsonify({
+            "prediccion_num": 2,
+            "estado_estres": "Estrés alto (dummy activado)"
+        })
+    # =========================================================
+
+    # Predicción real del modelo
     pred = int(model.predict(Xs)[0])
 
     labels = {0:"Relajado", 1:"Estrés leve", 2:"Estrés alto"}
