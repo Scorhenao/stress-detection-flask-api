@@ -9,8 +9,6 @@ Original file is located at
 El dataset no incluye señal PPG/BVP, por lo que esta variable se omite sin afectar el objetivo del modelo.
 """
 
-!pip install wfdb imbalanced-learn
-
 import os
 import numpy as np
 import pandas as pd

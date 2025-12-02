@@ -124,7 +124,7 @@
 
         const datos = Object.fromEntries(new FormData(e.target));
 
-        const res = await fetch("/predict", {
+        const res = await fetch("https://stress-detection-flask-api.onrender.com/predict", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(datos),
