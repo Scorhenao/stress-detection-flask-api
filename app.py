@@ -7,15 +7,16 @@ import os
 app = Flask(__name__)
 
 # ============================
-# CARGA DEL MODELO Y ESCALER
+# CARGA DEL MODELO Y SCALER
 # ============================
-MODEL_DIR = "models"
 
-model = joblib.load(os.path.join(MODEL_DIR, "model_stress.pkl"))
-scaler = joblib.load(os.path.join(MODEL_DIR, "scaler.pkl"))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Cargar columnas originales
-columns = json.load(open(os.path.join(MODEL_DIR, "columns.json")))
+model = joblib.load(os.path.join(BASE_DIR, "models", "model_stress.pkl"))
+scaler = joblib.load(os.path.join(BASE_DIR, "models", "scaler.pkl"))
+
+with open(os.path.join(BASE_DIR, "models", "columns.json"), "r") as f:
+    feature_cols = json.load(f)
 
 
 @app.route("/", methods=["GET"])
@@ -28,7 +29,7 @@ def predict():
     try:
         data = request.get_json()
 
-        # Convertir a lista en el mismo orden del entrenamiento
+        # Orden correcto según el entrenamiento
         features = np.array([
             float(data["ecg_mean"]),
             float(data["ecg_std"]),
@@ -38,10 +39,10 @@ def predict():
             float(data["resp_std"])
         ]).reshape(1, -1)
 
-        # Escalar
+        # Escalado
         features_scaled = scaler.transform(features)
 
-        # Predecir
+        # Predicción
         pred = int(model.predict(features_scaled)[0])
 
         labels = {0: "Relajado", 1: "Estrés leve", 2: "Estrés alto"}
