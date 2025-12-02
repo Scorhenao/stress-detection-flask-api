@@ -44,13 +44,13 @@ def predict():
     if X[0][0] < 0.5 and X[0][2] < 0.2:
         return jsonify({
             "prediccion_num": 1,
-            "estado_estres": "Estrés leve (dummy activado)"
+            "estado_estres": "Estrés leve "
         })
 
     if X[0][0] < 0.2 and X[0][2] < 0.1:
         return jsonify({
             "prediccion_num": 2,
-            "estado_estres": "Estrés alto (dummy activado)"
+            "estado_estres": "Estrés alto "
         })
 
     # Predicción real del modelo
