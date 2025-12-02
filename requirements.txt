@@ -1,5 +1,8 @@
 flask==2.3.2
-numpy
+gunicorn
+numpy==2.0.2
+pandas==2.3.3
 scikit-learn==1.6.1
 joblib
-gunicorn
+imbalanced-learn==0.14.0
+wfdb==4.3.0
