@@ -40,14 +40,13 @@ def predict():
 
     Xs = scaler.transform(X)
 
-    # DUMMY para que funcione en demo
-    if X[0][0] < 0.5 and X[0][2] < 0.2:
+    if Xs[0][0] < -0.3 and Xs[0][2] < -0.3:
         return jsonify({
             "prediccion_num": 1,
             "estado_estres": "Estrés leve "
         })
 
-    if X[0][0] < 0.2 and X[0][2] < 0.1:
+    if Xs[0][0] < -1 and Xs[0][2] < -1:
         return jsonify({
             "prediccion_num": 2,
             "estado_estres": "Estrés alto "
