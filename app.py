@@ -13,7 +13,7 @@ app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 model = joblib.load(os.path.join(BASE_DIR, "models", "model_stress.pkl"))
-scaler = joblib.load(os.path.join(BASE_DIR, "models", "scaler.pkl"))
+scaler = joblib.load(os.path.join(BASE_DIR, "models", "scaler3.pkl"))
 
 with open(os.path.join(BASE_DIR, "models", "columns.json"), "r") as f:
     feature_cols = json.load(f)
