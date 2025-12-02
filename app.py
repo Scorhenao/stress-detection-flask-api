@@ -20,8 +20,7 @@ with open(os.path.join(BASE_DIR, "models", "columns.json")) as f:
 # =============================
 @app.route("/", methods=["GET"])
 def home():
-    return jsonify({"message": "API Stress Detection funcionando! Usa /predict"})
-
+    return render_template("index.html")
 
 # =============================
 # ENDPOINT DE PREDICCIÓN
